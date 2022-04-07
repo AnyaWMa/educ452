@@ -9,7 +9,7 @@ df$g1tmathss<-std(df$g1tmathss)
 by(df$g1treadss,df$g1classtype,mean,na.rm=TRUE)
 ##(treatment-control)/sd(control)
 es0<-mean(df$g1treadss[df$g1classtype=="SMALL CLASS"],na.rm=TRUE)-mean(df$g1treadss[df$g1classtype=="REGULAR CLASS"],na.rm=TRUE)/sd(df$g1treadss[df$g1classtype=="REGULAR CLASS"],na.rm=TRUE)
-
+es0
 ##stop
 ################################################################
 mod<-lm(g1treadss~g1classtype+factor(g1schid),df[df$g1classtype %in% c("SMALL CLASS","REGULAR CLASS"),])
