@@ -49,7 +49,14 @@ fun<-function(N,n,p=0.5) { #N is the number of people, n is the number of tosses
 par(mfrow=c(5,5),mar=c(3,3,1,1),mgp=c(2,1,0),oma=rep(0,4))
 for (N in c(10,50,100,1000,5000)) for (n in c(5,25,100,1000,5000)) fun(N,n)
 
-############################################################################################################
+############################################################################
+
+rmultinom(1, 1000, prob = c(0.4,0.3,0.3))
+
+
+
+
+################################
 ##C. the normal distribution
 ##Let's attempt to recover some of the most useful facts about the normal distribution from simulation
 
@@ -75,13 +82,15 @@ for (i in 1:length(m2)) {
     out[[i]]<-c(m,s)
 }
 z<-do.call("rbind",out)
-
+z
 par(mfrow=c(1,2),mgp=c(2,1,0),mar=c(3,3,1,1))
 plot(m2,z[,1]); abline(0,1)
+hist(y)
 ##What does this tell us?
+This code generates a stable x1 and a series of x2 (n = 100), the first plot shows as x2 increases, the y = x1 + x2 increases accordingly. 
 plot(sd2,z[,2])
 ##What does this suggest? 
-
+The second plot suggests the sd of y increases as sd2 increases. 
 ##Note: Analytic derivations of these facts would be preferable for any number of reasons. The goal here is to get our hands dirty with some real simulations but simulations are not always the right tool for the job! 
 
 ##b. Now let's look at a bivariate normal distribution
@@ -97,3 +106,6 @@ for (val in c(-2,-1,0,1,1.5,2.5)) {
 
 ##What do you think? 
 ##Note the centers of these distributions on the x-axis. What would you need to change in the above to change those values? 
+
+
+
