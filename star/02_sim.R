@@ -42,3 +42,23 @@ df$g1classtype <- relevel(factor(df$g1classtype), ref = "REGULAR CLASS") ##empir
 mod2<-lm(g1treadss~g1classtype+factor(g1schid),df0[df0$g1classtype %in% c("SMALL CLASS","REGULAR CLASS"),])
 summary(mod2)$coef[1:2,]
 
+df$g1classtype <- as.character(df$g1classtype)
+
+# Define heterogeneous effects
+effect.free <- c("REGULAR CLASS" = 0, "SMALL CLASS" = 0.5, "REGULAR + AIDE CLASS" = 0)
+effect.nonfree <- c("REGULAR CLASS" = 0, "SMALL CLASS" = 0.2, "REGULAR + AIDE CLASS" = 0)
+
+# Assign mean effect per student
+mean_effect <- ifelse(
+  df$g1freelunch == "FREE LUNCH",
+  effect.free[match(df$g1classtype, names(effect.free))],
+  effect.nonfree[match(df$g1classtype, names(effect.nonfree))]
+)
+
+# Simulate scores with heterogeneous means
+df$g1treadss_2 <- rnorm(N, mean = mean_effect, sd = 1)
+mod3 <- lm(g1treadss_2 ~ g1classtype * g1freelunch + factor(g1schid), data = df[df$g1classtype %in% c("SMALL CLASS","REGULAR CLASS"),])
+summary(mod3)
+
+mod4 <- lm(g1treadss_2 ~ g1classtype  + factor(g1schid), data = df[df$g1classtype %in% c("SMALL CLASS","REGULAR CLASS"),])
+summary(mod4)
